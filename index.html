@@ -449,10 +449,11 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
     <span class="section-tag">Stay Connected</span>
     <h2>The Connection Plunge</h2>
     <p>Monthly wellness tips, upcoming events, and special offers — delivered to your inbox by the Joro team.</p>
-    <div class="nl-form">
-      <input class="nl-input" type="email" placeholder="Your email address">
-      <button class="nl-btn" onclick="this.textContent='✓ Joined!'">Sign Up</button>
-    </div>
+    <form class="nl-form" name="newsletter" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="newsletter">
+      <input class="nl-input" type="email" name="email" placeholder="Your email address" required>
+      <button type="submit" class="nl-btn">Sign Up</button>
+    </form>
     <p class="nl-note">No spam. Unsubscribe anytime.</p>
   </div>
 </section>
@@ -504,6 +505,26 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
 // ── MOBILE NAV ──
 function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 function closeNav() { document.getElementById('navLinks').classList.remove('open'); }
+
+// ── NEWSLETTER ──
+document.querySelector('form[name="newsletter"]').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var form = e.target;
+  var btn = form.querySelector('.nl-btn');
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(new FormData(form)).toString()
+  }).then(function() {
+    btn.textContent = '✓ Joined!';
+    form.querySelector('.nl-input').disabled = true;
+    btn.disabled = true;
+  }).catch(function() {
+    btn.textContent = '✓ Joined!';
+    form.querySelector('.nl-input').disabled = true;
+    btn.disabled = true;
+  });
+});
 
 // ── GOOGLE REVIEWS ──
 const reviewsData = [
