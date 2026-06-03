@@ -38,7 +38,6 @@ nav {
   display: flex; align-items: center; gap: 20px;
   height: 72px;
 }
-.nav-logo img { height: 44px; object-fit: contain; }
 .nav-links { display: flex; align-items: center; gap: 28px; margin-left: auto; }
 .nav-links a {
   color: rgba(242,234,216,0.65); text-decoration: none;
@@ -88,58 +87,180 @@ nav {
   line-height: 1.75; max-width: 500px; margin: 0 auto;
 }
 
-/* ── GIFT TIERS ── */
-.tiers { padding: 80px 5% 100px; background: var(--dark); }
-.tiers-inner { max-width: 960px; margin: 0 auto; }
-.tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+/* ── GIFT CARDS ── */
+.cards-section { padding: 80px 5% 100px; background: var(--dark); }
+.cards-inner { max-width: 1100px; margin: 0 auto; }
+.cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
 
-.tier-card {
-  background: var(--dark3); border-radius: 16px;
-  padding: 40px 32px; border: 1px solid rgba(242,234,216,0.07);
-  text-align: center; transition: border-color 0.2s, transform 0.2s;
-  position: relative; overflow: hidden;
+/* Card wrapper — holds perspective for 3D tilt */
+.card-wrap {
+  perspective: 800px;
+  cursor: pointer;
+}
+
+/* The gift card itself */
+.gift-card {
+  position: relative;
+  aspect-ratio: 1.6 / 1;
+  border-radius: 20px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  /* Idle float */
+  animation: card-float 4s ease-in-out infinite;
+}
+.card-wrap:nth-child(2) .gift-card { animation-delay: -1.3s; }
+.card-wrap:nth-child(3) .gift-card { animation-delay: -2.6s; }
+
+@keyframes card-float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Stop float on hover — JS takes over */
+.card-wrap:hover .gift-card {
+  animation: none;
+  box-shadow:
+    0 20px 60px rgba(200,129,58,0.2),
+    0 0 40px rgba(200,129,58,0.08);
+}
+
+/* Card background gradient */
+.gift-card-bg {
+  position: absolute; inset: 0;
+  border: 1px solid rgba(242,234,216,0.12);
+  border-radius: 20px;
+  z-index: 1;
+}
+.card-wrap:nth-child(1) .gift-card-bg {
+  background: linear-gradient(135deg, #1a2e1e 0%, #0e1510 40%, #1f2a1f 70%, #182018 100%);
+}
+.card-wrap:nth-child(2) .gift-card-bg {
+  background: linear-gradient(135deg, #2a1f0e 0%, #1a150a 40%, #2d2010 70%, #0e1510 100%);
+  border-color: rgba(200,129,58,0.25);
+}
+.card-wrap:nth-child(3) .gift-card-bg {
+  background: linear-gradient(135deg, #0e1520 0%, #0e1510 40%, #151f25 70%, #182018 100%);
+}
+
+/* Shine sweep effect */
+.gift-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  z-index: 3;
+  border-radius: 20px;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(242,234,216,0.06) 45%,
+    rgba(200,129,58,0.12) 50%,
+    rgba(242,234,216,0.06) 55%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+.card-wrap:hover .gift-card::after {
+  transform: translateX(100%);
+}
+
+/* Glow ring on hover */
+.gift-card::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px; right: -1px; bottom: -1px;
+  border-radius: 21px;
+  z-index: 0;
+  opacity: 0;
+  background: linear-gradient(135deg, var(--ember), transparent, var(--ember-lt));
+  transition: opacity 0.3s ease;
+}
+.card-wrap:hover .gift-card::before { opacity: 1; }
+
+/* Card content */
+.gift-card-content {
+  position: relative; z-index: 2;
+  height: 100%; padding: 28px 32px;
   display: flex; flex-direction: column;
+  justify-content: space-between;
 }
-.tier-card:hover { border-color: rgba(200,129,58,0.3); transform: translateY(-4px); }
-.tier-card.featured {
-  border-color: rgba(200,129,58,0.4);
-  background: linear-gradient(135deg, rgba(200,129,58,0.08), var(--dark3));
-}
-.tier-card.featured::before {
-  content: 'Most Popular';
-  position: absolute; top: 16px; right: 16px;
-  background: var(--ember); color: var(--dark);
-  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; padding: 4px 10px; border-radius: 99px;
-  font-family: 'Outfit', sans-serif;
-}
-.tier-icon { font-size: 28px; margin-bottom: 18px; }
-.tier-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--cream); margin-bottom: 8px; }
-.tier-price { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--ember); line-height: 1; margin-bottom: 6px; }
-.tier-price sup { font-size: 20px; vertical-align: super; }
-.tier-note { font-size: 13px; color: var(--muted); margin-bottom: 24px; font-weight: 300; }
-.tier-for {
-  font-size: 14.5px; color: rgba(242,234,216,0.7); line-height: 1.65;
-  font-weight: 300; font-style: italic; margin-bottom: 28px;
+.gc-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.gc-logo {
   font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight: 400; color: var(--cream);
+  letter-spacing: 0.06em;
 }
-.tier-includes { list-style: none; text-align: left; margin-bottom: 32px; flex: 1; }
-.tier-includes li {
-  font-size: 13px; color: rgba(242,234,216,0.6);
-  padding: 7px 0; border-bottom: 1px solid rgba(242,234,216,0.06);
-  display: flex; align-items: center; gap: 9px; font-weight: 300;
+.gc-badge {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--dark);
+  background: var(--ember); padding: 4px 10px;
+  border-radius: 99px; font-family: 'Outfit', sans-serif;
 }
-.tier-includes li:last-child { border-bottom: none; }
-.tier-check { color: var(--ember); font-size: 13px; }
-.tier-cta {
-  display: block; width: 100%; padding: 13px;
+.gc-middle {
+  text-align: center;
+}
+.gc-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 2.2vw, 26px); font-weight: 400;
+  color: var(--cream); margin-bottom: 4px;
+}
+.gc-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 3.5vw, 44px); font-weight: 300;
+  color: var(--ember); line-height: 1;
+}
+.gc-price sup { font-size: 18px; vertical-align: super; }
+.gc-bottom {
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.gc-detail {
+  font-size: 11px; color: rgba(242,234,216,0.4);
+  font-weight: 300; letter-spacing: 0.03em;
+}
+.gc-pattern {
+  width: 48px; height: 32px;
+  border: 1px solid rgba(242,234,216,0.1);
+  border-radius: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(242,234,216,0.04) 0px,
+    rgba(242,234,216,0.04) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+}
+
+/* Info below cards */
+.card-info {
+  text-align: center; margin-top: 28px;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.card-wrap:hover .card-info {
+  opacity: 1; transform: translateY(0);
+}
+.card-info-always {
+  text-align: center; margin-top: 20px;
+}
+.ci-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px; font-style: italic;
+  color: rgba(242,234,216,0.6); margin-bottom: 12px;
+}
+.ci-note {
+  font-size: 12.5px; color: var(--muted); font-weight: 300;
+  margin-bottom: 16px; line-height: 1.6;
+}
+.card-cta {
+  display: inline-block; padding: 11px 24px;
   background: var(--ember); color: var(--dark);
-  border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
-  cursor: pointer; font-family: 'Outfit', sans-serif;
-  text-decoration: none; text-align: center;
+  border-radius: 8px; font-size: 13px; font-weight: 600;
+  text-decoration: none; font-family: 'Outfit', sans-serif;
   transition: background 0.2s, transform 0.15s;
 }
-.tier-cta:hover { background: var(--ember-lt); transform: translateY(-1px); }
+.card-cta:hover { background: var(--ember-lt); transform: translateY(-1px); }
 
 /* ── HOW IT WORKS ── */
 .how { padding: 80px 5%; background: var(--dark2); }
@@ -204,8 +325,9 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
   .nav-book { margin-left: auto; font-size: 12px !important; padding: 8px 14px !important; }
   .nav-book-full { display: none; }
   .hero { padding: 80px 5% 60px; }
-  .tiers { padding: 60px 5% 80px; }
-  .tiers-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .cards-section { padding: 60px 5% 80px; }
+  .cards-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; gap: 48px; }
+  .gift-card { aspect-ratio: 1.55 / 1; }
   .how { padding: 60px 5%; }
   .how-steps { grid-template-columns: 1fr; gap: 32px; }
   .cta-band { padding: 48px 5%; }
@@ -243,53 +365,86 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
   </div>
 </section>
 
-<!-- GIFT TIERS -->
-<section class="tiers">
-  <div class="tiers-inner">
-    <div class="tiers-grid">
-      <div class="tier-card reveal">
-        <div class="tier-icon">🔥</div>
-        <div class="tier-name">Single Session</div>
-        <div class="tier-price"><sup>$</sup>59<span style="font-size:22px;">.95</span></div>
-        <div class="tier-note">one drop-in session</div>
-        <p class="tier-for">"For the friend who needs to unplug."</p>
-        <ul class="tier-includes">
-          <li><span class="tier-check">✓</span> Full hydrotherapy cycle</li>
-          <li><span class="tier-check">✓</span> Sauna, cold plunge & fire circle</li>
-          <li><span class="tier-check">✓</span> Robe, towel & flip flops</li>
-          <li><span class="tier-check">✓</span> Tea & water included</li>
-        </ul>
-        <a href="https://www.jorooutdoorspa.com/giftcards" target="_blank" class="tier-cta">Buy This Gift Card</a>
+<!-- GIFT CARDS -->
+<section class="cards-section">
+  <div class="cards-inner">
+    <div class="cards-grid">
+
+      <!-- CARD 1 — Experience for Two -->
+      <div class="card-wrap reveal" data-url="https://go.theflybook.com/book/374/EntityConfig/33472#/base/374/fe4b082a-1961-4e70-9b40-80aeea7e3306/config/33472/5511/giftcert">
+        <div class="gift-card">
+          <div class="gift-card-bg"></div>
+          <div class="gift-card-content">
+            <div class="gc-top">
+              <div class="gc-logo">Jörð</div>
+              <div class="gc-detail">GIFT CARD</div>
+            </div>
+            <div class="gc-middle">
+              <div class="gc-title">Experience for Two</div>
+              <div class="gc-price"><sup>$</sup>119<span style="font-size:22px;">.90</span></div>
+            </div>
+            <div class="gc-bottom">
+              <div class="gc-detail">2 drop-in sessions<br>+ HST</div>
+              <div class="gc-pattern"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info-always">
+          <p class="ci-tagline">"For the friend who needs to unplug — times two."</p>
+          <a href="https://go.theflybook.com/book/374/EntityConfig/33472#/base/374/fe4b082a-1961-4e70-9b40-80aeea7e3306/config/33472/5511/giftcert" target="_blank" class="card-cta">Buy This Gift Card</a>
+        </div>
       </div>
-      <div class="tier-card featured reveal reveal-delay-1">
-        <div class="tier-icon">✦</div>
-        <div class="tier-name">4-Session Package</div>
-        <div class="tier-price"><sup>$</sup>215<span style="font-size:22px;">.82</span></div>
-        <div class="tier-note">save 10% · shareable</div>
-        <p class="tier-for">"For the one who tried it once and can't stop talking about it."</p>
-        <ul class="tier-includes">
-          <li><span class="tier-check">✓</span> 4 full sessions</li>
-          <li><span class="tier-check">✓</span> 10% savings built in</li>
-          <li><span class="tier-check">✓</span> Shareable with household</li>
-          <li><span class="tier-check">✓</span> Flexible scheduling</li>
-          <li><span class="tier-check">✓</span> Priority booking access</li>
-        </ul>
-        <a href="https://www.jorooutdoorspa.com/giftcards" target="_blank" class="tier-cta">Buy This Gift Card</a>
+
+      <!-- CARD 2 — Bundle & Save 4-Session -->
+      <div class="card-wrap reveal reveal-delay-1" data-url="https://go.theflybook.com/book/374/EntityConfig/33473#/base/374/fe4b082a-1961-4e70-9b40-80aeea7e3306/config/33473/4800/giftcert">
+        <div class="gift-card">
+          <div class="gift-card-bg"></div>
+          <div class="gift-card-content">
+            <div class="gc-top">
+              <div class="gc-logo">Jörð</div>
+              <div class="gc-badge">Save 10%</div>
+            </div>
+            <div class="gc-middle">
+              <div class="gc-title">Bundle &amp; Save — 4 Sessions</div>
+              <div class="gc-price"><sup>$</sup>215<span style="font-size:22px;">.82</span></div>
+            </div>
+            <div class="gc-bottom">
+              <div class="gc-detail">4-session package<br>+ HST · shareable</div>
+              <div class="gc-pattern"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info-always">
+          <p class="ci-tagline">"For the one who tried it once and can't stop talking about it."</p>
+          <a href="https://go.theflybook.com/book/374/EntityConfig/33473#/base/374/fe4b082a-1961-4e70-9b40-80aeea7e3306/config/33473/4800/giftcert" target="_blank" class="card-cta">Buy This Gift Card</a>
+        </div>
       </div>
-      <div class="tier-card reveal reveal-delay-2">
-        <div class="tier-icon">🌊</div>
-        <div class="tier-name">Private Experience</div>
-        <div class="tier-price" style="font-size:36px;">from <sup>$</sup>349<span style="font-size:22px;">.95</span></div>
-        <div class="tier-note">exclusive private session</div>
-        <p class="tier-for">"For the couple, the crew, or anyone who deserves the whole space."</p>
-        <ul class="tier-includes">
-          <li><span class="tier-check">✓</span> Full private access to Joro</li>
-          <li><span class="tier-check">✓</span> Custom time allotment</li>
-          <li><span class="tier-check">✓</span> Perfect for groups & events</li>
-          <li><span class="tier-check">✓</span> Personalized coordination</li>
-        </ul>
-        <a href="https://www.jorooutdoorspa.com/giftcards" target="_blank" class="tier-cta">Buy This Gift Card</a>
+
+      <!-- CARD 3 — Bundle & Save 8-Session -->
+      <div class="card-wrap reveal reveal-delay-2" data-url="https://go.theflybook.com/book/374/EntityConfig/33474#/base/374/fe4b082a-1961-4e70-9b40-80aeea7e3306/config/33474/4801/giftcert">
+        <div class="gift-card">
+          <div class="gift-card-bg"></div>
+          <div class="gift-card-content">
+            <div class="gc-top">
+              <div class="gc-logo">Jörð</div>
+              <div class="gc-badge">Save 15%</div>
+            </div>
+            <div class="gc-middle">
+              <div class="gc-title">Bundle &amp; Save — 8 Sessions</div>
+              <div class="gc-price"><sup>$</sup>407<span style="font-size:22px;">.66</span></div>
+            </div>
+            <div class="gc-bottom">
+              <div class="gc-detail">8-session package<br>+ HST · shareable</div>
+              <div class="gc-pattern"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info-always">
+          <p class="ci-tagline">"For the wellness convert who made it a lifestyle."</p>
+          <a href="https://go.theflybook.com/book/374/EntityConfig/33474#/base/374/fe4b082a-1961-4e70-9b40-80aeea7e3306/config/33474/4801/giftcert" target="_blank" class="card-cta">Buy This Gift Card</a>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -303,7 +458,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
       <div class="how-step reveal">
         <div class="how-num">1</div>
         <h4>Pick a card</h4>
-        <p>Choose a single session, a package, or a private experience — whatever fits your person.</p>
+        <p>Choose an experience for two, a 4-session bundle, or the full 8-session package.</p>
       </div>
       <div class="how-step reveal reveal-delay-1">
         <div class="how-num">2</div>
@@ -312,7 +467,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
       </div>
       <div class="how-step reveal reveal-delay-2">
         <div class="how-num">3</div>
-        <h4>They book & enjoy</h4>
+        <h4>They book &amp; enjoy</h4>
         <p>Your person picks a date that works for them and shows up ready to reset.</p>
       </div>
     </div>
@@ -321,9 +476,9 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
 
 <!-- CTA -->
 <section class="cta-band reveal">
-  <h3>Not sure which one? <em>Start with a single session.</em></h3>
+  <h3>Not sure which one? <em>Start with the Experience for Two.</em></h3>
   <p>Most people who try Joro once end up buying a package for themselves.</p>
-  <a href="https://www.jorooutdoorspa.com/giftcards" target="_blank" class="btn-primary">Browse Gift Cards</a>
+  <a href="https://go.theflybook.com/book/374/EntityConfig/33472#/base/374/fe4b082a-1961-4e70-9b40-80aeea7e3306/config/33472/5511/giftcert" target="_blank" class="btn-primary">Buy a Gift Card</a>
 </section>
 
 <!-- FOOTER -->
@@ -370,13 +525,44 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
 </footer>
 
 <script>
+// ── MOBILE NAV ──
 function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 function closeNav() { document.getElementById('navLinks').classList.remove('open'); }
 
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
+// ── 3D TILT ON HOVER ──
+document.querySelectorAll('.card-wrap').forEach(function(wrap) {
+  var card = wrap.querySelector('.gift-card');
+
+  wrap.addEventListener('mousemove', function(e) {
+    var rect = wrap.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    var centerX = rect.width / 2;
+    var centerY = rect.height / 2;
+    var rotateY = ((x - centerX) / centerX) * 12;
+    var rotateX = ((centerY - y) / centerY) * 12;
+    card.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.03)';
+  });
+
+  wrap.addEventListener('mouseleave', function() {
+    card.style.transform = '';
+  });
+
+  // Click the card itself to open link
+  wrap.addEventListener('click', function(e) {
+    if (e.target.closest('.card-cta')) return; // let button handle itself
+    var url = wrap.getAttribute('data-url');
+    if (url) window.open(url, '_blank');
+  });
+});
+
+// ── SCROLL REVEAL ──
+var revealObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  });
 }, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
 </script>
 </body>
 </html>
