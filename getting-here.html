@@ -76,14 +76,6 @@ nav {
   display: flex; align-items: flex-end;
   overflow: hidden;
 }
-.hero-img {
-  position: absolute; inset: 0;
-  background: url('assets/ontario-outdoor-spa.png') center/cover no-repeat;
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(14,21,16,0.95) 0%, rgba(14,21,16,0.4) 50%, rgba(14,21,16,0.15) 100%);
-}
 .hero-inner {
   position: relative; z-index: 2;
   max-width: 900px; margin: 0 auto; width: 100%;
@@ -228,10 +220,8 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-img"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-inner reveal">
+<section class="hero" style="min-height:auto; background:var(--dark2);">
+  <div class="hero-inner reveal" style="padding-top:48px;">
     <span class="section-tag">Visit Us</span>
     <h1 class="section-title">Getting to <em>Jörð Spa</em></h1>
     <p class="hero-sub">Nestled inside Long Point Eco-Adventures in Turkey Point, Ontario — where nature meets renewal.</p>
