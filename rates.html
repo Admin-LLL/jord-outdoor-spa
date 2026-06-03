@@ -89,6 +89,7 @@ nav {
   padding: 40px 32px; border: 1px solid rgba(242,234,216,0.07);
   text-align: center; transition: border-color 0.2s, transform 0.2s;
   position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
 }
 .rate-card:hover { border-color: rgba(200,129,58,0.3); transform: translateY(-4px); }
 .rate-card.featured {
@@ -117,6 +118,16 @@ nav {
 }
 .rate-includes li:last-child { border-bottom: none; }
 .rate-check { color: var(--ember); font-size: 13px; }
+.rate-includes { flex: 1; }
+.rate-cta {
+  display: block; width: 100%; padding: 13px;
+  background: var(--ember); color: var(--dark);
+  border: none; border-radius: 8px; font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: 'Outfit', sans-serif;
+  text-decoration: none; text-align: center; margin-top: 24px;
+  transition: background 0.2s, transform 0.15s;
+}
+.rate-cta:hover { background: var(--ember-lt); transform: translateY(-1px); }
 
 /* ── FOOTER ── */
 footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -174,6 +185,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
     <a href="thestory.html" onclick="closeNav()">The Story</a>
     <a href="index.html#experience" onclick="closeNav()">The Experience</a>
     <a href="rates.html" class="active" onclick="closeNav()">Session Rates</a>
+    <a href="giftcards.html" onclick="closeNav()">Gift Cards</a>
     <a href="private.html" onclick="closeNav()">Private Events</a>
     <a href="getting-here.html" onclick="closeNav()">Getting Here</a>
     <a href="faq.html" onclick="closeNav()">FAQ</a>
@@ -204,6 +216,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
           <li><span class="rate-check">✓</span> Robe, towel & flip flops</li>
           <li><span class="rate-check">✓</span> Tea & water included</li>
         </ul>
+        <a href="https://go.theflybook.com/book/374/EntityConfig/33213" target="_blank" class="rate-cta">Book Now</a>
       </div>
       <div class="rate-card featured reveal reveal-delay-1">
         <div class="rate-icon">✦</div>
@@ -218,6 +231,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
           <li><span class="rate-check">✓</span> Flexible scheduling</li>
           <li><span class="rate-check">✓</span> Priority booking access</li>
         </ul>
+        <a href="https://go.theflybook.com/book/374/EntityConfig/33473#/base/374/fe4b082a-1961-4e70-9b40-80aeea7e3306/config/33473/4800/giftcert" target="_blank" class="rate-cta">Buy 4-Session Package</a>
       </div>
       <div class="rate-card reveal reveal-delay-2">
         <div class="rate-icon">🌊</div>
@@ -232,6 +246,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
           <li><span class="rate-check">✓</span> Flexible scheduling</li>
           <li><span class="rate-check">✓</span> Priority booking access</li>
         </ul>
+        <a href="https://go.theflybook.com/book/374/EntityConfig/33474#/base/374/fe4b082a-1961-4e70-9b40-80aeea7e3306/config/33474/4801/giftcert" target="_blank" class="rate-cta">Buy 8-Session Package</a>
       </div>
     </div>
     <div style="text-align:center; margin-top:44px;" class="reveal">
@@ -263,7 +278,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
         <a href="journal.html">Wellness Journal</a>
         <a href="faq.html">FAQ</a>
         <a href="https://www.instagram.com/joro.well/" target="_blank">Instagram</a>
-        <a href="gift-cards.html">Gift Cards</a>
+        <a href="giftcards.html">Gift Cards</a>
       </div>
       <div class="footer-col">
         <h4>Visit Us</h4>
