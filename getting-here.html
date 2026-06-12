@@ -3,6 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1150263887156630');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1150263887156630&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <title>Getting Here | Jörð Outdoor Spa — Turkey Point, Norfolk County</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -216,7 +233,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
     <a href="getting-here.html" class="active" onclick="closeNav()">Getting Here</a>
     <a href="faqs.html" onclick="closeNav()">FAQ</a>
   </div>
-  <a href="https://go.theflybook.com/book/374/EntityConfig/33213" target="_blank" class="nav-book">Book<span class="nav-book-full"> a Session</span></a>
+  <a href="https://go.theflybook.com/book/374/EntityConfig/33213" target="_blank" onclick="fbq('track','InitiateCheckout');" class="nav-book">Book<span class="nav-book-full"> a Session</span></a>
   <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
 </nav>
 
@@ -271,7 +288,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
 <section class="cta-band reveal">
   <h3>Ready to <em>slow down?</em></h3>
   <p>Book your session and we'll see you on the trail.</p>
-  <a href="https://go.theflybook.com/book/374/EntityConfig/33213" target="_blank" class="cta-btn">Book a Session</a>
+  <a href="https://go.theflybook.com/book/374/EntityConfig/33213" target="_blank" onclick="fbq('track','InitiateCheckout');" class="cta-btn">Book a Session</a>
 </section>
 
 <!-- FOOTER -->
@@ -289,7 +306,7 @@ footer { background: #07100a; padding: 60px 5% 36px; border-top: 1px solid rgba(
         <a href="index.html#experience">The Cycle</a>
         <a href="session-rates.html">Session Rates</a>
         <a href="private.html">Private Events</a>
-        <a href="https://go.theflybook.com/book/374/EntityConfig/33213" target="_blank">Book a Session</a>
+        <a href="https://go.theflybook.com/book/374/EntityConfig/33213" target="_blank" onclick="fbq('track','InitiateCheckout');">Book a Session</a>
       </div>
       <div class="footer-col">
         <h4>Explore</h4>
