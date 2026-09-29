@@ -1,3 +1,8 @@
 /the-experience  /#experience  301
 /rates           /session-rates 301
 /faq             /faqs          301
+
+# Internal editing files — never serve publicly
+/CLAUDE.md         /404  404!
+/EDITING-GUIDE.md  /404  404!
+/.claude/*         /404  404!
