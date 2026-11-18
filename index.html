@@ -526,18 +526,23 @@ document.querySelector('form[name="newsletter"]').addEventListener('submit', fun
   e.preventDefault();
   var form = e.target;
   var btn = form.querySelector('.nl-btn');
+  var note = form.parentNode.querySelector('.nl-note');
+  btn.disabled = true;
+  btn.textContent = 'Signing up…';
   fetch('/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(new FormData(form)).toString()
-  }).then(function() {
+  }).then(function(res) {
+    if (!res.ok) throw new Error('Signup failed: ' + res.status);
     btn.textContent = '✓ Joined!';
     form.querySelector('.nl-input').disabled = true;
-    btn.disabled = true;
+    note.textContent = 'No spam. Unsubscribe anytime.';
   }).catch(function() {
-    btn.textContent = '✓ Joined!';
-    form.querySelector('.nl-input').disabled = true;
-    btn.disabled = true;
+    // Only claim success when the signup actually saved; otherwise let them retry.
+    btn.disabled = false;
+    btn.textContent = 'Sign Up';
+    note.textContent = 'Sorry, that didn’t go through. Please try again, or email drew@jorooutdoorspa.com.';
   });
 });
 
